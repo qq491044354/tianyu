@@ -211,8 +211,8 @@ requetData(){
       -H 'X-Requested-With: XMLHttpRequest' \
       --data 'up=0&down=0&total=0&remark=&enable=true&expiryTime=0&listen=&port=6868&protocol=socks&settings=%7B%0A%20%20%22auth%22%3A%20%22password%22%2C%0A%20%20%22accounts%22%3A%20%5B%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%22user%22%3A%20%226%22%2C%0A%20%20%20%20%20%20%22pass%22%3A%20%226%22%0A%20%20%20%20%7D%0A%20%20%5D%2C%0A%20%20%22udp%22%3A%20true%2C%0A%20%20%22ip%22%3A%20%22'$public_ip'%22%0A%7D&streamSettings=%7B%0A%20%20%22network%22%3A%20%22tcp%22%2C%0A%20%20%22security%22%3A%20%22none%22%2C%0A%20%20%22tcpSettings%22%3A%20%7B%0A%20%20%20%20%22header%22%3A%20%7B%0A%20%20%20%20%20%20%22type%22%3A%20%22none%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D&sniffing=%7B%7D' \
       --insecure
-    echo -e "\n----------------------------------------------\n"
-    echo -e "${green}安装成功！GSY你个大傻逼"
+    echo -e "\n"
+    echo -e "安装成功！GSY你个大傻逼"
 
 }
 
