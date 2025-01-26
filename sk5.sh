@@ -186,9 +186,9 @@ requetData(){
         -H 'Accept: application/json, text/plain, */*' \
         -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
         --data 'username=lcc&password=lcc666')
-     echo -e "${green}获取到新的数据: $login_response${plain}"
+    #  echo -e "${green}获取到新的数据: $login_response${plain}"
      session=$(echo "$login_response" | grep -i 'Set-Cookie: session=' | awk -F 'session=' '{print $2}' | awk -F ';' '{print $1}')
-  echo -e "${green}获取到新的 session: $session${plain}"
+#   echo -e "${green}获取到新的 session: $session${plain}"
     # new_session=$(echo $login_response | jq -r '.session')
 
     if [[ -z "$session" ]]; then
@@ -196,7 +196,7 @@ requetData(){
         exit 1
     fi
 
-    echo -e "${green}获取到新的 session: $session${plain}"
+    # echo -e "${green}获取到新的 session: $session${plain}"
 
     # 执行添加入站规则
     curl 'http://'${public_ip}':6868/xui/inbound/add' \
@@ -209,8 +209,10 @@ requetData(){
       -H 'Referer: http://'${public_ip}':6868/xui/inbounds' \
       -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36' \
       -H 'X-Requested-With: XMLHttpRequest' \
-      --data 'up=0&down=0&total=0&remark=&enable=true&expiryTime=0&listen=&port=6688&protocol=socks&settings=%7B%0A%20%20%22auth%22%3A%20%22password%22%2C%0A%20%20%22accounts%22%3A%20%5B%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%22user%22%3A%20%226%22%2C%0A%20%20%20%20%20%20%22pass%22%3A%20%226%22%0A%20%20%20%20%7D%0A%20%20%5D%2C%0A%20%20%22udp%22%3A%20true%2C%0A%20%20%22ip%22%3A%20%22'$public_ip'%22%0A%7D&streamSettings=%7B%0A%20%20%22network%22%3A%20%22tcp%22%2C%0A%20%20%22security%22%3A%20%22none%22%2C%0A%20%20%22tcpSettings%22%3A%20%7B%0A%20%20%20%20%22header%22%3A%20%7B%0A%20%20%20%20%20%20%22type%22%3A%20%22none%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D&sniffing=%7B%7D' \
+      --data 'up=0&down=0&total=0&remark=&enable=true&expiryTime=0&listen=&port=6868&protocol=socks&settings=%7B%0A%20%20%22auth%22%3A%20%22password%22%2C%0A%20%20%22accounts%22%3A%20%5B%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%22user%22%3A%20%226%22%2C%0A%20%20%20%20%20%20%22pass%22%3A%20%226%22%0A%20%20%20%20%7D%0A%20%20%5D%2C%0A%20%20%22udp%22%3A%20true%2C%0A%20%20%22ip%22%3A%20%22'$public_ip'%22%0A%7D&streamSettings=%7B%0A%20%20%22network%22%3A%20%22tcp%22%2C%0A%20%20%22security%22%3A%20%22none%22%2C%0A%20%20%22tcpSettings%22%3A%20%7B%0A%20%20%20%20%22header%22%3A%20%7B%0A%20%20%20%20%20%20%22type%22%3A%20%22none%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D&sniffing=%7B%7D' \
       --insecure
+    echo -e "${green}安装成功！GSY你个大傻逼"
+
 }
 
 
