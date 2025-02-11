@@ -1,14 +1,30 @@
 #!/bin/bash
+red='\033[0;31m'
+green='\033[0;32m'
+yellow='\033[0;33m'
+plain='\033[0m'
 
+# 获取公网IP
+public_ip=$(curl -s ifconfig.me)
+
+if [[ -z "$public_ip" ]]; then
+    echo -e "${red}无法获取服务器公网IP，请检查网络设置！${plain}"
+    exit 1
+fi
+
+echo -e "${green}检测到服务器公网IP：$public_ip${plain}"
 # 更新系统
 echo "Updating system packages..."
 sudo yum update -y
+
 
 # 安装必要的软件包
 echo "Installing gcc, make, epel-release..."
 sudo yum install -y gcc make epel-release
 # 安装expect
 sudo yum install -y expect
+
+
 # 下载并解压SoftEther VPN Server
 SOFTETHER_VERSION="4.43-9799-beta-2023.08.31"
 FILE_NAME="softether-vpnserver-v${SOFTETHER_VERSION}-linux-x64-64bit.tar.gz"
@@ -86,7 +102,7 @@ cat /usr/local/vpnserver/chain.pem /usr/local/vpnserver/key.pem > /usr/local/vpn
 expect <<EOF
 spawn sudo /usr/local/vpnserver/vpncmd
 expect "Select 1, 2 or 3:" { send "1\r" }
-expect "Hostname of IP Address of Destination:" { send "47.238.102.11\r" }
+expect "Hostname of IP Address of Destination:" { send "${public_ip}\r" }
 expect "Specify Virtual Hub Name:" { send "\r" }
 expect ">" { send "ServerPasswordSet\r" }
 expect "Password:" { send "a8852217\r" }
