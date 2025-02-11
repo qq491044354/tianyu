@@ -83,28 +83,45 @@ openssl x509 -req -days 365 -in /usr/local/vpnserver/request.csr -signkey /usr/l
 cat /usr/local/vpnserver/chain.pem /usr/local/vpnserver/key.pem > /usr/local/vpnserver/server.pem
 
 # 运行SoftEther配置工具
-{
-    echo 1
-    echo ""
-    echo 47.238.102.11
-    echo "ServerPasswordSet"
-    echo a8852217
-    echo a8852217
-    echo "HubCreate VPN"
-    echo a8852217
-    echo a8852217
-    echo "Hub VPN"
-    echo "UserCreate q"
-    echo ""
-    echo q
-    echo ""
-    echo "UserPasswordSet q"
-    echo 123
-    echo 123
-    echo "SecureNatEnable"
-    echo "SstpEnable"
-    echo yes
-    echo "HubDelete DEFAULT"
-} | sudo /usr/local/vpnserver/vpncmd
-
+expect <<EOF
+spawn sudo /usr/local/vpnserver/vpncmd
+expect "Select 1, 2 or 3:" { send "1\r" }
+expect "Hostname of IP Address of Destination:" { send "47.238.102.11\r" }
+expect "Specify Virtual Hub Name:" { send "\r" }
+expect ">" { send "ServerPasswordSet\r" }
+expect "Password:" { send "a8852217\r" }
+expect "Confirm password:" { send "a8852217\r" }
+expect ">" { send "HubCreate VPN\r" }
+expect "Password:" { send "a8852217\r" }
+expect "Confirm input:" { send "a8852217\r" }
+expect ">" { send "Hub VPN\r" }
+expect ">" { send "UserCreate q\r" }
+expect "Assigned Group Name:" { send "\r" }
+expect "User Full Name:" { send "q\r" }
+expect "User Description:" { send "\r" }
+expect ">" { send "UserPasswordSet q\r" }
+expect "Password:" { send "123\r" }
+expect "Confirm input:" { send "123\r" }
+expect ">" { send "SecureNatEnable\r" }
+expect ">" { send "SstpEnable\r" }
+expect "Enables SSTP VPN Clone Server Function (yes / no)" { send "yes\r" }
+expect ">" { send "HubDelete DEFAULT\r" }
+expect eof
+EOF
 echo "GSY你个大傻逼！！"
+    # echo "HubCreate VPN1"
+    # echo a8852217
+    # echo a8852217
+    # echo "Hub VPN"
+    # echo "UserCreate q"
+    # echo ""
+    # echo q
+    # echo ""
+    # echo "UserPasswordSet q"
+    # echo 123
+    # echo 123
+    # echo "SecureNatEnable"
+    # echo "SstpEnable"
+    # echo yes
+    # echo "HubDelete DEFAULT"
+    # 以下是部署完毕登录的脚本
