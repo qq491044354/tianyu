@@ -1,12 +1,16 @@
 #!/bin/bash
 
+
+
 # 更新系统
 echo "Updating system packages..."
 sudo yum update -y
 
 # 安装必要的软件包
-echo "Installing gcc, make, and epel-release..."
+echo "Installing gcc, make, epel-release..."
 sudo yum install -y gcc make epel-release
+# 安装expect
+sudo yum install -y expect
 
 # 下载并解压SoftEther VPN Server
 SOFTETHER_VERSION="4.43-9799-beta-2023.08.31"
@@ -61,19 +65,21 @@ sudo yum install -y openssl
 
 openssl genrsa -out /usr/local/vpnserver/key.pem 2048
 
-# 生成CSR文件，等待用户输入
-openssl req -new -key /usr/local/vpnserver/key.pem -out /usr/local/vpnserver/request.csr
+# 使用expect自动生成CSR文件
+expect <<EOF
+spawn openssl req -new -key /usr/local/vpnserver/key.pem -out /usr/local/vpnserver/request.csr
+expect "Country Name (2 letter code)" { send "CN\r" }
+expect "State or Province Name" { send "Beijing\r" }
+expect "Locality Name" { send "Beijing\r" }
+expect "Organization Name" { send "ss\r" }
+expect "Organizational Unit Name" { send "IT Department\r" }
+expect "Common Name" { send "vpn.example.com\r" }
+expect "Email Address" { send "admin@163.com\r" }
+expect "A challenge password" { send "lcc666\r" }
+expect "An optional company name" { send "ss\r" }
+expect eof
+EOF
 
-# 提示用户输入内容
-echo "Country Name (2 letter code) [AU]: CN"
-echo "State or Province Name (full name) [Some-State]: Beijing"
-echo "Locality Name (eg, city) []: Beijing"
-echo "Organization Name (eg, company) [Internet Widgits Pty Ltd]: ss"
-echo "Organizational Unit Name (eg, section) []: IT Department"
-echo "Common Name (e.g. server FQDN or YOUR name) []: vpn.example.com"
-echo "Email Address []: admin@163.com"
-echo "A challenge password []: lcc666"
-echo "An optional company name []: ss"
 
 # 签署证书
 openssl x509 -req -days 365 -in /usr/local/vpnserver/request.csr -signkey /usr/local/vpnserver/key.pem -out /usr/local/vpnserver/chain.pem
