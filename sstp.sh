@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 # 更新系统
 echo "Updating system packages..."
 sudo yum update -y
@@ -11,7 +9,6 @@ echo "Installing gcc, make, epel-release..."
 sudo yum install -y gcc make epel-release
 # 安装expect
 sudo yum install -y expect
-
 # 下载并解压SoftEther VPN Server
 SOFTETHER_VERSION="4.43-9799-beta-2023.08.31"
 FILE_NAME="softether-vpnserver-v${SOFTETHER_VERSION}-linux-x64-64bit.tar.gz"
@@ -80,7 +77,6 @@ expect "An optional company name" { send "ss\r" }
 expect eof
 EOF
 
-
 # 签署证书
 openssl x509 -req -days 365 -in /usr/local/vpnserver/request.csr -signkey /usr/local/vpnserver/key.pem -out /usr/local/vpnserver/chain.pem
 
@@ -89,6 +85,7 @@ cat /usr/local/vpnserver/chain.pem /usr/local/vpnserver/key.pem > /usr/local/vpn
 # 运行SoftEther配置工具
 {
     echo 1
+    echo ""
     echo 47.238.102.11
     echo "ServerPasswordSet"
     echo a8852217
@@ -110,4 +107,4 @@ cat /usr/local/vpnserver/chain.pem /usr/local/vpnserver/key.pem > /usr/local/vpn
     echo "HubDelete DEFAULT"
 } | sudo /usr/local/vpnserver/vpncmd
 
-echo "SoftEther VPN Server installation and configuration completed successfully."
+echo "GSY你个大傻逼！！"
