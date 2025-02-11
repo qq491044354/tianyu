@@ -90,7 +90,7 @@ expect "Hostname of IP Address of Destination:" { send "47.238.102.11\r" }
 expect "Specify Virtual Hub Name:" { send "\r" }
 expect ">" { send "ServerPasswordSet\r" }
 expect "Password:" { send "a8852217\r" }
-expect "Confirm password:" { send "a8852217\r" }
+expect "Confirm input:" { send "a8852217\r" }
 expect ">" { send "HubCreate VPN\r" }
 expect "Password:" { send "a8852217\r" }
 expect "Confirm input:" { send "a8852217\r" }
