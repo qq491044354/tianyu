@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# 切换到root用户
-sudo -i
-sudo su root
 
 # 更新系统
 sudo yum update -y
