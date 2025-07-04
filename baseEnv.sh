@@ -4,7 +4,7 @@ set -e
 
 echo "📦 正在更新系统并安装依赖..."
 pkg update -y && pkg upgrade -y
-pkg install -y clang make libffi zlib readline openssl curl tar
+yes | pkg install clang make libffi zlib readline openssl curl tar
 
 echo "📥 正在下载 Python 3.9.13 源码..."
 cd ~
