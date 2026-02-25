@@ -72,8 +72,8 @@ elif [[ x"${release}" == x"debian" ]]; then
     fi
 fi
 # 获取公网IP
-public_ip=$(curl -s ifconfig.me)
 
+echo -e "进入公网IP检测"
 public_ip=$(curl -s --max-time 5 ifconfig.me)
 if [[ -z "$public_ip" ]]; then
     public_ip=$(curl -s --max-time 5 ipinfo.io/ip)
