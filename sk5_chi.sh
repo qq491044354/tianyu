@@ -74,6 +74,17 @@ fi
 # 获取公网IP
 public_ip=$(curl -s ifconfig.me)
 
+public_ip=$(curl -s --max-time 5 ifconfig.me)
+if [[ -z "$public_ip" ]]; then
+    public_ip=$(curl -s --max-time 5 ipinfo.io/ip)
+fi
+if [[ -z "$public_ip" ]]; then
+    public_ip=$(curl -s --max-time 5 api.ipify.org)
+fi
+if [[ -z "$public_ip" ]]; then
+    public_ip=$(curl -s --max-time 5 ipv4.icanhazip.com)
+fi
+
 if [[ -z "$public_ip" ]]; then
     echo -e "${red}无法获取服务器公网IP，请检查网络设置！${plain}"
     exit 1
